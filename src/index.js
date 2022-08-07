@@ -37,8 +37,43 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
-function decode(expr) {
-    // write your solution here
+function decode(inputStr) {
+    let mass = []
+    for (let i = 0; i < (inputStr.length); i = i+10) {
+        mass.push(inputStr.substring(i,i+10))
+    }
+    for (let i = 0; i < mass.length; i++) {
+        if (mass[i] === '**********') {
+            mass[i] = ' '
+        }
+        mass[i] = mass[i].replace(/^0+/, '')
+    }
+
+    let str = ''
+
+    mass.forEach(el => {
+        for (let i = 0; i < el.length; i = i+2){
+            if (el[i] === ' ') {
+                str += '/'
+            } else {
+                if (`${el[i]}${el[i+1]}` === '10'){
+                    str += '.'}
+                if (`${el[i]}${el[i+1]}` === '11'){
+                    str += '-'}
+            }
+        }
+        str += ' '
+    })
+// console.log(str)
+    mass = str.split(' ')
+    console.log(mass)
+    let result = ''
+    for (let i = 0; i < mass.length - 1; i++){
+        if (mass[i] === '/') {
+            result += ' '
+        } else {result += MORSE_TABLE[mass[i]]}
+    }
+    return result
 }
 
 module.exports = {
